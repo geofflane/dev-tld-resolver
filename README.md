@@ -1,4 +1,4 @@
-# dev-tld-resolver
+# test-tld-resolver
 
 Simple top level domain (NSSwitch hosts) resolver for linux based development environment.
 
@@ -26,14 +26,14 @@ sudo make install
 
 > It's very important that you run the ```make install``` command as **root** or using **sudo**, otherwise installation will fail.
 
-- As root (or in super user mode with sudo) also edit **/etc/environment** using a text editor of your choice and export a global environment variable named **DEV_TLD_DOMAINS** with comma separated list of Top Level Domains (**tld**) that you want to resolve to ```127.0.0.1``` automatically. For example, if you want ```.dev```, ```.wp```, ```.dpl``` top level domains to be resolved by **dev-tld-resolver**, your **/etc/environment** should have following line within it somewhere.
+- As root (or in super user mode with sudo) also edit **/etc/environment** using a text editor of your choice and export a global environment variable named **TEST_TLD_DOMAINS** with comma separated list of Top Level Domains (**tld**) that you want to resolve to ```127.0.0.1``` automatically. For example, if you want ```.test```, ```.wp```, ```.dpl``` top level domains to be resolved by **test-tld-resolver**, your **/etc/environment** should have following line within it somewhere.
 ```
-DEV_TLD_DOMAINS=dev,wp,dpl
+TEST_TLD_DOMAINS=test,wp,dpl
 ```
 
-> Above step is optional if you don't need **dev-tld-resolver** to resolve top level domains other than ```.dev```, which is the default
+> Above step is optional if you don't need **test-tld-resolver** to resolve top level domains other than ```.test```, which is the default
 
-- Lastly as root (or in super user mode with sudo) edit ```/etc/nsswitch.conf``` file and append ```dev_tld``` to the line starting with ```hosts:```. 
+- Lastly as root (or in super user mode with sudo) edit ```/etc/nsswitch.conf``` file and append ```test_tld``` to the line starting with ```hosts:```. 
 
 > If you have following line starting with ```hosts:``` in ```/etc/nsswitch.conf``` file
 > ```
@@ -41,18 +41,18 @@ DEV_TLD_DOMAINS=dev,wp,dpl
 > ```
 > then you should change it to look like
 > ```
-> hosts: files mdns4_minimal [NOTFOUND=return] dns mdns4 dev_tld
+> hosts: files mdns4_minimal [NOTFOUND=return] dns mdns4 test_tld
 > ```
-> If you experience some sort of delay while resolving a host name, you should try to move ```dev_tld``` before dns, as follows
+> If you experience some sort of delay while resolving a host name, you should try to move ```test_tld``` before dns, as follows
 > ```
-> hosts: files mdns4_minimal [NOTFOUND=return] dev_tld dns mdns4
+> hosts: files mdns4_minimal [NOTFOUND=return] test_tld dns mdns4
 > ```
 
 - Now logout or reboot your system and login again. After logging in into the system, open a command line and type following command
 ```
-ping test.dev
+ping test.test
 ```
-If ping is successful, then **dev-tld-resolver** is installed & configured correctly.
+If ping is successful, then **test-tld-resolver** is installed & configured correctly.
 
 # Credits
 

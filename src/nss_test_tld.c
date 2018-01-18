@@ -8,12 +8,12 @@
 
 // declarations
 
-void dev_tld_fill_hostent(const char *name,
+void test_tld_fill_hostent(const char *name,
                   int af,
                   struct hostent *result);
 
 enum nss_status
-_nss_dev_tld_gethostbyname2_r(const char *name,
+_nss_test_tld_gethostbyname2_r(const char *name,
                            int af,
                            struct hostent *result,
                            char *buffer,
@@ -23,7 +23,7 @@ _nss_dev_tld_gethostbyname2_r(const char *name,
 
 
 enum nss_status
-_nss_dev_tld_gethostbyname_r(const char *name,
+_nss_test_tld_gethostbyname_r(const char *name,
                           struct hostent *result,
                           char *buffer,
                           size_t buflen,
@@ -32,7 +32,7 @@ _nss_dev_tld_gethostbyname_r(const char *name,
 
 
 enum nss_status
-_nss_dev_tld_gethostbyaddr_r(const void *addr,
+_nss_test_tld_gethostbyaddr_r(const void *addr,
                          int len,
                          int af,
                          struct hostent *result,
@@ -45,7 +45,7 @@ _nss_dev_tld_gethostbyaddr_r(const void *addr,
 // definitions
 
 void
-dev_tld_fill_hostent(const char *name,
+test_tld_fill_hostent(const char *name,
                   int af,
                   struct hostent *result)
 {
@@ -79,7 +79,7 @@ dev_tld_fill_hostent(const char *name,
 }
 
 enum nss_status
-_nss_dev_tld_gethostbyname2_r(const char *name,
+_nss_test_tld_gethostbyname2_r(const char *name,
                            int af,
                            struct hostent *result,
                            char *buffer,
@@ -95,10 +95,10 @@ _nss_dev_tld_gethostbyname2_r(const char *name,
     //FILE *log = fopen("/tmp/nss_prax.log","a+");
     //fprintf(log, "%s (%d)...", name, af);
 
-    char *env = getenv("DEV_TLD_DOMAINS");
+    char *env = getenv("TEST_TLD_DOMAINS");
     char *domains;
     if (env == NULL) {
-        domains = strdup("dev");
+        domains = strdup("test");
     } else {
         domains = strdup(env);
     }
@@ -113,7 +113,7 @@ _nss_dev_tld_gethostbyname2_r(const char *name,
 
             if (strcasecmp(name_ext, ext) == 0) {
                 status = NSS_STATUS_SUCCESS;
-                dev_tld_fill_hostent(name, af, result);
+                test_tld_fill_hostent(name, af, result);
                 free(ext);
                 break;
             }
@@ -131,18 +131,18 @@ _nss_dev_tld_gethostbyname2_r(const char *name,
 }
 
 enum nss_status
-_nss_dev_tld_gethostbyname_r(const char *name,
+_nss_test_tld_gethostbyname_r(const char *name,
                           struct hostent *result,
                           char *buffer,
                           size_t buflen,
                           int *errnop,
                           int *h_errnop)
 {
-    return _nss_dev_tld_gethostbyname2_r(name, AF_INET, result, buffer, buflen, errnop, h_errnop);
+    return _nss_test_tld_gethostbyname2_r(name, AF_INET, result, buffer, buflen, errnop, h_errnop);
 }
 
 enum nss_status
-_nss_dev_tld_gethostbyaddr_r(const void *addr,
+_nss_test_tld_gethostbyaddr_r(const void *addr,
                          int len,
                          int af,
                          struct hostent *result,
